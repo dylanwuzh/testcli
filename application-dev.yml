@@ -1,0 +1,67 @@
+# 该环境用于测试环境，指定db、redis的地址为测试地址
+server:
+  # TODO dev环境的端口号
+  port: 9000
+  servlet:
+    # TODO 接口的path
+    context-path: /api
+
+spring:
+  # jackson
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+
+  # database
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: ${dbUrlDev}
+    username: ${dbUserName}
+    password: ${dbPassword}
+
+    # druid
+    druid:
+      filters: stat,wall,log4j
+      maxActive: 10
+      initialSize: 2
+      maxWait: 60000
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+      minIdle: 2
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+
+# mybatis
+mybatis:
+  mapper-locations: classpath:mybatis_mappers/*.xml
+  type-aliases-package: ${packageName}.entity
+
+# logging
+logging:
+  level:
+    # TODO 修改为真正的包名
+    com.template.api.mappers: debug
+
+# aliyun OSS
+# TODO 阿里云OSS 按需使用
+alioss:
+  endPoint:
+  accessKeyId:
+  accessKeySecret:
+  bucketName:
+  bucketImageDir:
+  bucketFileDir:
+  bucketHost:
+
+# application config
+application:
+  # TODO 文件保存到服务器时的配置，使用FileKeeper类进行文件保存
+  files:
+    # TODO 文件URL路径的path，用于拼接URL
+    path:
+    # TODO 文件保存到服务器的文件夹路径
+    dir:
